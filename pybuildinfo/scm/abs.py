@@ -14,6 +14,11 @@ import abc
 import time
 import platform
 import os
+import subprocess
+try:
+	import pwd
+except:
+	pass
 
 
 class SCM(metaclass=abc.ABCMeta):
@@ -84,11 +89,35 @@ class SCM(metaclass=abc.ABCMeta):
             result['build_system'] = platform.system()
         if not result['build_system_version']:
             result['build_system_version'] = platform.version()
+            if 'linux' in platform.system().lower():
+                try:
+                    result['build_system_version'] = SCM._lsb_release()
+                except:
+                    result['build_system_version'] = platform.release()
+                        
+                
         if not result['build_machine']:
             result['build_machine'] = platform.machine()
         if not result['build_node']:
             result['build_node'] = platform.node()
         if not result['build_node_login']:
-            result['build_node_login'] = os.getlogin()
+            try:
+                result['build_node_login'] = os.getlogin()
+            except FileNotFoundError:
+                result['build_node_login'] = pwd.getpwuid(os.getuid())[0]
 
         return result
+
+    @staticmethod
+    def _lsb_release():
+        try:
+            with subprocess.Popen(['lsb_release', '-d'], stdout=subprocess.PIPE, stderr=subprocess.PIPE) as lbs:
+                lbs.wait()
+                result = lbs.stdout.readlines()[0].decode()
+                description = 'description:'
+                if result.lower().startswith(description):
+                    return result[len(description):].strip()
+                else:
+                    raise RuntimeError()
+        except:
+            raise RuntimeError()

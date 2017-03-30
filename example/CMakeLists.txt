@@ -23,3 +23,6 @@ add_custom_target(
 )
 add_dependencies(buildInfoExample preBuildInfoExample)
 set_property(TARGET buildInfoExample PROPERTY CXX_STANDARD 11)
+if(CMAKE_COMPILER_IS_GNUCXX)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+endif(CMAKE_COMPILER_IS_GNUCXX)
