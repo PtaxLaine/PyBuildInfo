@@ -4,7 +4,7 @@ project(pyBuildInfoExample)
 
 find_package(PythonInterp 3.2 REQUIRED)
 
-set(BI_HEADER "${CMAKE_CACHEFILE_DIR}includeBuildInfo/")
+set(BI_HEADER "${CMAKE_BINARY_DIR}/includeBuildInfo/")
 get_filename_component(BI_HEADER ${BI_HEADER} REALPATH)
 
 make_directory("${BI_HEADER}")
@@ -26,3 +26,4 @@ set_property(TARGET buildInfoExample PROPERTY CXX_STANDARD 11)
 if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif(CMAKE_COMPILER_IS_GNUCXX)
+

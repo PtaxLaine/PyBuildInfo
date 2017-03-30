@@ -55,6 +55,15 @@ class SCM(metaclass=abc.ABCMeta):
         pre['build_toolchain_version'] = ''
         pre['build_target_system'] = ''
         pre['build_target_machine'] = ''
+        pre['c_predef_arch'] = '\n'\
+                               '#if (defined(__amd64__) || defined(_M_AMD64))\n"x86_64"\n'\
+                               '#elif (defined(__i386__) || defined(__i386) || defined(_M_IX86) || defined(__X86__) || defined(_X86_) || defined(__THW_INTEL__) || defined(__I86__) || defined(__INTEL__) || defined(__386))\n"x86"\n'\
+                               '#elif (defined(__arm__) || defined(_ARM) || defined(_M_ARM) || defined(__arm))\n"ARM"\n'\
+                               '#elif (defined(__aarch64__) || defined(_M_ARM64))\n"ARM64"\n'\
+                               '#elif (defined(__IA64__) || defined(__ia64) || defined(_M_IA64) || defined(__itanium__))\n"IA-64"\n'\
+                               '#elif (defined(__mips__) || defined(__mips) || defined(__MIPS__))\n"MIPS"\n'\
+                               '#elif (defined(__ppc__) || defined(_M_PPC) || defined(_ARCH_PPC) || defined(__ppc))\n"PPC"\n'\
+                               '#else\n'
         return pre;
 
     @staticmethod
