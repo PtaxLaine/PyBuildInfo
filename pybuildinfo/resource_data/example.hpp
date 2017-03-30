@@ -33,6 +33,12 @@ namespace BuildInfo{
     static const ::std::string build_toolchain         = "$build_toolchain$";
     static const ::std::string build_toolchain_version = "$build_toolchain_version$";
     static const ::std::string build_target_system     = "$build_target_system$";
+#if defined(__amd64__) || defined(_M_AMD64)
+    static const ::std::string build_target_machine    = "AMD64";
+#elif defined(__i386__) || defined(__i386) || defined(_M_IX86) || defined(__X86__) || defined(_X86_) || defined(__I86__)
+    static const ::std::string build_target_machine    = "x86";
+#else
     static const ::std::string build_target_machine    = "$build_target_machine$";
+#endif
 }
 #endif
