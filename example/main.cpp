@@ -1,69 +1,45 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-#include <buildinfoexample.hpp>
-
-template<typename A, typename B>
-static void print(A name, B value){
-    size_t width = 14;
-    ::std::cout << "\t";
-    ::std::cout << ::std::left << ::std::setw(width) << ::std::setfill(' ') << name;
-    bool offset = false;
-    ::std::stringstream ss;
-    ss << value;
-    auto val = ss.str();
-    for(char x : val){
-        if(offset){
-            ::std::cout << ::std::endl << "\t";
-            ::std::cout << ::std::left << ::std::setw(width) << ::std::setfill(' ') << "";
-            offset = false;
-        }
-        if(x == '\n'){
-            offset = true;
-        }
-        else if(x != '\r'){
-            ::std::cout << x;
-        }
-    }
-    if(offset || val.empty() || val.back() != '\n')
-        ::std::cout << std::endl;
-}
+#include <pybuildinfoexample.hpp>
 
 int main(){
-    std::cout << "scm:\t" << BuildInfo::scm_name << std::endl;
+    using namespace std;
+    using namespace pybuildinfo;
 
-    print("hash", BuildInfo::scm_revisions_short + " / " + BuildInfo::scm_revisions);
-    print("time", BuildInfo::scm_rfc2822);
-    print("timestamp", BuildInfo::scm_timestamp);
-    print("branch", BuildInfo::scm_branch);
-    if(!BuildInfo::scm_author_email.empty())
-        print("author", BuildInfo::scm_author + " <" + BuildInfo::scm_author_email + ">");
-    else
-        print("author", BuildInfo::scm_author);
-    if(BuildInfo::scm_message_escaping.find('\n') == ::std::string::npos){
-        print("message", BuildInfo::scm_message_escaping);
-    }
-    else{
-        print("message:", "-----------------------");
-        print("", BuildInfo::scm_message_escaping);
-        print("", "-----------------------");
-    }
-    print("tags", BuildInfo::scm_version_tags);
-    print("version", BuildInfo::scm_version + (BuildInfo::scm_version_stable ? "  stable" : "  unstable"));
-    print("major", BuildInfo::scm_version_major);
-    print("minor", BuildInfo::scm_version_minor);
-    print("patch", BuildInfo::scm_version_patch);
-    std::cout << std::endl;
+    int width = 32;
 
-    std::cout << "build:" << std::endl;
-    print("time", BuildInfo::build_rfc2822);
-    print("timestamp", BuildInfo::build_timestamp);
-    print("sys", BuildInfo::build_system);
-    print("sys_ver", BuildInfo::build_system_version);
-    print("sys_arch", BuildInfo::build_machine);
-    print("node", BuildInfo::build_node_login + "@" + BuildInfo::build_node);
-    print("toolchain", BuildInfo::build_toolchain);
-    print("toolchain_ver", BuildInfo::build_toolchain_version);
-    print("target_sys", BuildInfo::build_target_system);
-    print("targer_arch", BuildInfo::build_target_machine);
+    cout << left;
+    cout << setw(width) << "vcs::name" << vcs::name << endl;
+    cout << setw(width) << "vcs::revision" << vcs::revision << endl;
+    cout << setw(width) << "vcs::revision_short" << vcs::revision_short << endl;
+    cout << setw(width) << "vcs::revision_version" << vcs::revision_version << endl;
+    cout << setw(width) << "vcs::revision_version_tag" << vcs::revision_version_tag << endl;
+    cout << setw(width) << "vcs::revision_version_major" << vcs::revision_version_major << endl;
+    cout << setw(width) << "vcs::revision_version_minor" << vcs::revision_version_minor << endl;
+    cout << setw(width) << "vcs::revision_version_patch" << vcs::revision_version_patch << endl;
+    cout << setw(width) << "vcs::revision_version_stable" << vcs::revision_version_stable << endl;
+    cout << setw(width) << "vcs::revision_author" << vcs::name << endl;
+    cout << setw(width) << "vcs::revision_author_name" << vcs::revision_author_name << endl;
+    cout << setw(width) << "vcs::revision_author_email" << vcs::revision_author_email << endl;
+    cout << setw(width) << "vcs::revision_message" << vcs::revision_message << endl;
+    cout << setw(width) << "vcs::revision_timestamp" << vcs::revision_timestamp << endl;
+    cout << setw(width) << "vcs::revision_time_rfc2822" << vcs::revision_time_rfc2822 << endl;
+    cout << setw(width) << "vcs::revision_tags";
+    for(auto&& x : vcs::revision_tags)
+    	cout << x << ", ";
+    cout << endl;
+
+    cout << setw(width) << "station::node" << station::node << endl;
+    cout << setw(width) << "station::user" << station::user << endl;
+    cout << setw(width) << "station::arch" << station::arch << endl;
+    cout << setw(width) << "station::system" << station::system << endl;
+    cout << setw(width) << "station::system_version" << station::system_version << endl;
+    cout << setw(width) << "station::timestamp" << station::timestamp << endl;
+    cout << setw(width) << "station::time_rfc2822" << station::time_rfc2822 << endl;
+
+    cout << setw(width) << "build::toolchain" << build::toolchain << endl;
+    cout << setw(width) << "build::toolchain_version" << build::toolchain_version << endl;
+    cout << setw(width) << "build::target_system" << build::target_system << endl;
+    cout << setw(width) << "build::target_arch" << build::target_arch << endl;
 }
