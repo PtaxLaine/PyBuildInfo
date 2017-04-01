@@ -16,6 +16,6 @@ def r_open(name, mode='r', buffering=-1, encoding=None, errors=None, newline=Non
     return open(r_find(name), mode, buffering, encoding, errors, newline, closefd, opener)
 
 
-def r_load(name):
-    with r_open(name, 'rb') as fs:
+def r_load(name, mode='r'):
+    with r_open(name, mode) as fs:
         return fs.read()

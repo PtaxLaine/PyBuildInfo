@@ -16,7 +16,7 @@ class Git:
             logging.info("{} {} detected".format(self.name, self.version))
 
             if not version_regex:
-                self.__version_regex = re.compile(r'^(v|ver|version)?\.?( )??([0-9]+)\.([0-9]+)\.?([0-9]+)?$')
+                self.__version_regex = re.compile(r'^(v|ver|version)?\.?( )??([0-9]+)\.([0-9]+)\.?([0-9]+)?.*$')
             else:
                 self.__version_regex = re.compile(version_regex)
 

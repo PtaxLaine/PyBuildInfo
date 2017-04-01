@@ -21,6 +21,9 @@ setup(
     url=info['url'],
     classifiers=info['classifiers'],
 
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
+
     package_data={'pybuildinfo.resource': ['default.hpp']},
     data_files = [("", ["LICENSE.md"])],
     packages=['pybuildinfo', 'pybuildinfo.resource', 'pybuildinfo.vcs'],

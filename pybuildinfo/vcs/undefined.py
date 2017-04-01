@@ -24,7 +24,7 @@ class UndefinedVCS:
     def status(self):
         return 0, '', ''
 
-    def revision(self, revision='.'):
+    def revision(self, revision=None):
         di = 'revision_short', 'revision', 'timestamp', 'author', 'author_email', 'message'
         result = dict(zip((di), ['undefined'] * len(di)))
         result['timestamp'] = 0

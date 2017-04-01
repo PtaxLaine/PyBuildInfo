@@ -16,7 +16,7 @@ class Hg:
             logging.info("{} {} detected".format(self.name, self.version))
 
             if not version_regex:
-                self.__version_regex = re.compile(r'^(v|ver|version)\.? ?([0-9]+)\.([0-9]+)\.?([0-9]+)?$')
+                self.__version_regex = re.compile(r'^(v|ver|version)\.? ?([0-9]+)\.([0-9]+)\.?([0-9]+)?.*$')
             else:
                 self.__version_regex = re.compile(version_regex)
 
@@ -35,7 +35,7 @@ class Hg:
 
     @property
     def alias(self):
-        return ['Mercurial', 'hg']
+        return ['mercurial', 'hg']
 
     def status(self):
         return self.command('status', raw=True)
@@ -63,6 +63,9 @@ class Hg:
             for tag in x[1:]:
                 result.append([tag, x[0]])
         return result
+
+    def tag_hash(self, tag):
+        return self.command('log', '-l', '1', '-r', tag, '--template', '{node}')
 
     def revision_tags(self, revision):
         all_tags = self.all_tags()
