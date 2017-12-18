@@ -3,7 +3,7 @@
 """
 {
     "name": "PyBuildInfo",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "license": "BSD 3-Clause License",
     "author": "Andrei V",
     "author_email": "andrei@ptaxa.net",

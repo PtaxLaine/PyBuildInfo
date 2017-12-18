@@ -1,0 +1,6 @@
+[package]
+name = "pybuildinfo_rust_example"
+version = "1.0.0"
+authors = ["Andrei V <andrei@ptaxa.net>"]
+
+[dependencies]
